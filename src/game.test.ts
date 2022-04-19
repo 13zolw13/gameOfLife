@@ -57,6 +57,19 @@ describe(`Lifegame`, () => {
 
     });
 
+    it('should became undead', () => {
+      const lifeGame = new LifeGame(5, 5);
+      lifeGame.setCell(1, 1, false);
+      lifeGame.setCell(0, 0, true);
+      lifeGame.setCell(1, 0, true);
+      lifeGame.setCell(2, 1, true);
+      lifeGame.setCell(2, 0, true);;
+      lifeGame.updateStatus();
+      console.log(lifeGame.gameArray);
+      expect(lifeGame.gameArray[1][1]).toBe(true);
+
+    });
+
     it('should not stay alive- not enough neighbor', () => {
       const lifeGame = new LifeGame(5, 5);
       lifeGame.setCell(1, 1, true);
