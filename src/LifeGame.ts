@@ -1,10 +1,10 @@
 
+type cellStatus = null | boolean;
+
 export class LifeGame {
+  gameArray: cellStatus[][];
 
-
-  gameArray: any[][];
-
-  constructor(private a: number, b: number) {
+  constructor(a: number, b: number) {
     this.gameArray = new Array(a).fill(null).map(() => new Array(b).fill(null));
   }
 
@@ -13,7 +13,7 @@ export class LifeGame {
   setCell(x: number, y: number, status: boolean) {
     this.gameArray[x][y] = status;
   }
-  aliveNeighbors(arg0: number, arg1: number): any {
+  aliveNeighbors(arg0: number, arg1: number): number {
     let count = 0;
     for (let i = -1; i < 2; i++) {
       for (let j = -1; j < 2; j++) {
@@ -43,7 +43,5 @@ export class LifeGame {
         }
       });
     });
-
   }
-
 }
