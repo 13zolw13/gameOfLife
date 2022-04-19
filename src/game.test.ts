@@ -1,8 +1,8 @@
 import { LifeGame } from "./LifeGame";
 
 
-;
-describe(`${LifeGame.name}`, () => {
+
+describe(`Lifegame`, () => {
 
   describe('Set up value', () => {
 
@@ -50,7 +50,6 @@ describe(`${LifeGame.name}`, () => {
     it('should stay alive', () => {
       const lifeGame = new LifeGame(5, 5);
       lifeGame.setCell(1, 1, true);
-      lifeGame.setCell(2, 2, true);
       lifeGame.setCell(0, 0, true);
       lifeGame.setCell(1, 0, true);
       lifeGame.updateStatus();
@@ -58,12 +57,23 @@ describe(`${LifeGame.name}`, () => {
 
     });
 
-    it('should not stay alive', () => {
+    it('should not stay alive- not enough neighbor', () => {
       const lifeGame = new LifeGame(5, 5);
       lifeGame.setCell(1, 1, true);
       lifeGame.setCell(2, 2, true);
       lifeGame.setCell(0, 0, true);
       lifeGame.setCell(1, 5, true);
+      lifeGame.updateStatus();
+      expect(lifeGame.gameArray[1][1]).toBe(false);
+
+    });
+    it('should not stay alive too crowded', () => {
+      const lifeGame = new LifeGame(5, 5);
+      lifeGame.setCell(1, 1, true);
+      lifeGame.setCell(2, 2, true);
+      lifeGame.setCell(2, 1, true);
+      lifeGame.setCell(0, 0, true);
+      lifeGame.setCell(1, 0, true);
       lifeGame.updateStatus();
       expect(lifeGame.gameArray[1][1]).toBe(false);
 

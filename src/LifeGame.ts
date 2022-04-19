@@ -33,7 +33,7 @@ export class LifeGame {
       row.forEach((cell, j) => {
         const aliveNeighbors = this.aliveNeighbors(i, j);
         if (cell) {
-          if (aliveNeighbors < 2) {
+          if (aliveNeighbors < 2 || aliveNeighbors > this.minAliveNeighbors) {
             this.gameArray[i][j] = false;
           }
         } else {
