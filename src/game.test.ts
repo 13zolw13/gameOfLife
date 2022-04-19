@@ -2,12 +2,14 @@
 
 export class LifeGame {
 
+
   gameArray: any[][];
 
   constructor(private a: number, b: number) {
     this.gameArray = new Array(a).fill(null).map(() => new Array(b).fill(null));
   }
 
+  private minAliveNeighbors = 3
 
   setCell(x: number, y: number, status: boolean) {
     this.gameArray[x][y] = status;
@@ -26,9 +28,26 @@ export class LifeGame {
     }
     return count;
   }
-}
 
+  updateStatus() {
+    this.gameArray.forEach((row, i) => {
+      row.forEach((cell, j) => {
+        const aliveNeighbors = this.aliveNeighbors(i, j);
+        if (cell) {
+          if (aliveNeighbors < 2) {
+            this.gameArray[i][j] = false;
+          }
+        } else {
+          if (aliveNeighbors === this.minAliveNeighbors) {
+            this.gameArray[i][j] = true;
+          }
+        }
+      });
+    });
 
+  }
+
+};
 describe(`${LifeGame.name}`, () => {
 
   describe('Set up value', () => {
@@ -73,4 +92,27 @@ describe(`${LifeGame.name}`, () => {
     });
   })
 
+  describe('Checking the status neighbor cells and changing status if enough alive neighbors ', () => {
+    it('should stay alive', () => {
+      const lifeGame = new LifeGame(5, 5);
+      lifeGame.setCell(1, 1, true);
+      lifeGame.setCell(2, 2, true);
+      lifeGame.setCell(0, 0, true);
+      lifeGame.setCell(1, 0, true);
+      lifeGame.updateStatus();
+      expect(lifeGame.gameArray[1][1]).toBe(true);
+
+    });
+
+    it('should not stay alive', () => {
+      const lifeGame = new LifeGame(5, 5);
+      lifeGame.setCell(1, 1, true);
+      lifeGame.setCell(2, 2, true);
+      lifeGame.setCell(0, 0, true);
+      lifeGame.setCell(1, 5, true);
+      lifeGame.updateStatus();
+      expect(lifeGame.gameArray[1][1]).toBe(false);
+
+    });
+  })
 });
